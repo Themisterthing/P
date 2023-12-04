@@ -1,0 +1,98 @@
+# Thomas Parent
+# 12 septembre 2023
+# TP3
+
+from random import *
+import time
+from os import system
+
+def clear():
+   system('cls')
+
+
+print('\033[36m______________________ \n'
+     '|                    |\n'
+     '|   Jeu de monstre   |\n'
+     '|                    |\n'
+     '|                    |\n'
+     '|   1 pour règle     |\n'
+     '|  0 pour commencer  |\n'
+     '|                    |\n'
+     '|____________________|\033[0m')
+
+
+while True:
+
+   time.sleep(2)
+   start = input("Voulez-vous regarder les règles ou commencer à jouer (1/0)?")
+   if start == '1':
+       print("Pendant que vous jouez, vous aurez le choix d'attaquer l'ennemi ou de partir en retraite.\n"
+             "Le nombre de dégâts correspond au nombre que vous obtiendrez si vous choisissez d'attaquer\n"
+             "et le nombre de vies que vous gagnerez peut varier entre 1 et 5, selon le niveau de difficulté de l'ennemi.")
+       time.sleep(5)
+   elif start == '0':
+       break
+   else:
+       print("Votre réponse n'est pas valide. Veuillez entrer 1 pour regarder les règles ou 0 pour commencer à jouer.")
+       time.sleep(2)
+       clear()
+
+niveau_vie = 20
+room = 1
+nombre_victoires = 0
+nombre_defaites = 0
+
+while niveau_vie > 0:
+   force_adversaire = randint(1, 5)
+   score_dé = randint(1, 6)
+   clear()
+   print(f"Vous avez \033[95m{niveau_vie} vies.\033[0m\n"
+         f"Vous avez \033[92m{nombre_victoires} victoires\033[0m\n"
+         f"Vous avez \033[91m{nombre_defaites} défaites\033[0m")
+   time.sleep(2)
+   print("Vous êtes entré dans la salle", room, "et avez rencontré un ennemi de niveau", force_adversaire, ".")
+   time.sleep(2)
+   choix = input("Voulez-vous l'attaquer (1) ou quitter la salle (0)? ")
+
+   if choix == "1":
+       if score_dé <= force_adversaire:
+           clear()
+           print("Vous avez infligé", score_dé, "dégâts à l'ennemi.")
+           print("L'ennemi vous inflige", force_adversaire, "dégâts en retour.")
+           time.sleep(2)
+           niveau_vie -= force_adversaire
+           nombre_defaites += 1
+           room += 1
+       else:
+           print("Vous avez infligé", score_dé, "dégâts à l'ennemi.")
+           print("Vous avez gagné", force_adversaire, "vies.")
+           time.sleep(2)
+           niveau_vie += force_adversaire
+           nombre_victoires += 1
+           room += 1
+   elif choix == "0":
+       print("Vous avez quitté la salle et vous avez perdu 1 vie.")
+       niveau_vie -= 1
+       room += 1
+   else:
+       print("Choix invalide. Veuillez entrer '1' ou '0'.")
+       niveau_vie -= 0.5
+
+
+clear()
+print("Vous êtes mort\n"
+     "Vous êtes entré dans",room,"salles.\n"
+     "Vous avez gagné",nombre_victoires,"combats.\n"
+     "Vous avez perdu",nombre_defaites,"combats.")
+
+
+
+
+
+
+
+
+
+
+
+
